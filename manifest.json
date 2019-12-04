@@ -1,0 +1,8 @@
+{
+  "name": "Network Security Mini Project - Ron Barsimantov",
+  "description": "",
+  "version": "1.0",
+  "manifest_version": 2,
+  "background": {"scripts":["blacklist.js","background.js","userHandler.js"]},
+  "permissions": ["storage", "tabs", "webNavigation", "webRequest", "webRequestBlocking", "<all_urls>"]
+}

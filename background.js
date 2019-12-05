@@ -20,25 +20,6 @@ function updateCurrentUrl(url) {
     chrome.storage.local.set({"currentUrl": url}, function(){});
 }
 
-function markUrlAsHandled(url) {
-    /**
-     * update environment:
-     *  let the system know that this url had already handled
-     */
-    console.log("updating environment variable: adding url " + url + " to 'handled_urls'");
-    chrome.storage.local.get(["handled_urls"], function(environment){
-        var handledUrls=environment.handled_urls;
-
-        if(!handledUrls){
-            handledUrls=[url];
-        }
-        else if(!handledUrls.includes(url))
-            handledUrls.push(url);
-
-        chrome.storage.local.set({"handled_urls": handledUrls}, function(){});
-    });
-}
-
 function updateRedirectUrl(url) {
     /**
      * check the environment to handle url appropriately:
@@ -71,8 +52,6 @@ function redirect(details){
 
     updateCurrentUrl(details.url);
 
-    // markUrlAsHandled(details.url);
-
     updateRedirectUrl(details.url);
 
     // wait 1.5 seconds before start executing (system stability)
@@ -90,14 +69,3 @@ chrome.webRequest.onBeforeRequest.addListener(
     redirect,
     {urls: blacklist},
     ["blocking"]);
-
-/*
-todo:
-  add a lot of logs
-  refactor variables names, functions name
-  think about popup OR user intervention to add/remove urls
-
-done:
-  think on another simple buttons
-
- */
